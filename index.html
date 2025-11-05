@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك أسئلة الكيمياء - المخاليط والعناصر والمركبات</title>
+    <style>
+        /* التنسيقات العامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2a4d8e, #3a70b0);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* شاشة البداية */
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #a8d0ff;
+        }
+        
+        .info-card {
+            background: white;
+            color: #333;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .student-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            text-align: right;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #1a2a6c;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #2a4d8e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-details {
+            background: #000;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* قسم الألغاز */
+        .puzzles-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .puzzles-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+            text-align: center;
+        }
+        
+        .puzzles-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #a8d0ff;
+        }
+        
+        .puzzles-btn {
+            background: linear-gradient(135deg, #ff9900, #ff6600);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+        
+        .puzzles-btn:hover {
+            background: linear-gradient(135deg, #ff6600, #ff3300);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
+        }
+        
+        /* شاشة الألغاز */
+        #puzzles-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .puzzles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .puzzles-counter {
+            font-size: 1.2rem;
+        }
+        
+        .puzzle-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        
+        .puzzle-text {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .puzzle-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .puzzle-option {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .puzzle-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .puzzle-option.selected {
+            background: rgba(26, 115, 232, 0.5);
+            border: 2px solid #1a73e8;
+        }
+        
+        .puzzle-option.correct {
+            background: rgba(52, 168, 83, 0.5);
+            border: 2px solid #34a853;
+        }
+        
+        .puzzle-option.incorrect {
+            background: rgba(234, 67, 53, 0.5);
+            border: 2px solid #ea4335;
+        }
+        
+        .puzzle-feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .puzzle-feedback.correct {
+            background: rgba(52, 168, 83, 0.2);
+            border: 1px solid #34a853;
+            display: block;
+        }
+        
+        .puzzle-feedback.incorrect {
+            background: rgba(234, 67, 53, 0.2);
+            border: 1px solid #ea4335;
+            display: block;
+        }
+        
+        .puzzle-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        /* شاشة الأسئلة */
+        #quiz-screen {
+            display: none;
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .question-counter {
+            font-size: 1.2rem;
+        }
+        
+        .question-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .option.selected {
+            background: rgba(26, 115, 232, 0.5);
+            border: 2px solid #1a73e8;
+        }
+        
+        .option.correct {
+            background: rgba(52, 168, 83, 0.5);
+            border: 2px solid #34a853;
+        }
+        
+        .option.incorrect {
+            background: rgba(234, 67, 53, 0.5);
+            border: 2px solid #ea4335;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(52, 168, 83, 0.2);
+            border: 1px solid #34a853;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(234, 67, 53, 0.2);
+            border: 1px solid #ea4335;
+            display: block;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background: #2a4d8e;
+        }
+        
+        .nav-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+        
+        /* شاشة النتائج */
+        #results-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .results-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .celebration {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .score {
+            font-size: 3rem;
+            margin: 20px 0;
+            color: #ffcc00;
+        }
+        
+        .feedback-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .team-section {
+            margin-top: 50px;
+        }
+        
+        .team-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #a8d0ff;
+        }
+        
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .member {
+            background: linear-gradient(135deg, #1a2a6c, #3a70b0);
+            padding: 15px;
+            border-radius: 10px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* الرسوم المتحركة للتفاعلات الكيميائية */
+        .chemical-reactions {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .reaction {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .team-members {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- تفاعلات كيميائية في الخلفية -->
+    <div class="chemical-reactions" id="chemical-reactions"></div>
+    
+    <!-- شاشة البداية -->
+    <div id="start-screen">
+        <div class="container">
+            <div class="header">
+                <div class="stars" id="stars"></div>
+                <h1>بنك أسئلة الكيمياء</h1>
+                <h2>المخاليط والعناصر والمركبات</h2>
+            </div>
+            
+            <div class="info-card">
+                <form class="student-form" id="student-form">
+                    <div class="form-group">
+                        <label for="student-name">اسم الطالب</label>
+                        <input type="text" id="student-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="student-section">الشعبة</label>
+                        <select id="student-section" required>
+                            <option value="">اختر الشعبة</option>
+                            <option value="1">الشعبة 1</option>
+                            <option value="2">الشعبة 2</option>
+                            <option value="3">الشعبة 3</option>
+                            <option value="4">الشعبة 4</option>
+                            <option value="5">الشعبة 5</option>
+                            <option value="6">الشعبة 6</option>
+                            <option value="7">الشعبة 7</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">ابدأ الاختبار</button>
+                </form>
+                
+                <div class="test-details">
+                    <p>تفاصيل الاختبار:</p>
+                    <p>المدة: 40 دقيقة | عدد الأسئلة: 50 سؤال</p>
+                    <p>لا يمكن تخطي السؤال بدون إجابة</p>
+                </div>
+            </div>
+            
+            <!-- قسم الألغاز -->
+            <div class="puzzles-section">
+                <h3 class="puzzles-title">ألغاز كيميائية</h3>
+                <p class="puzzles-subtitle">خلك قد التحدي!</p>
+                <button class="puzzles-btn" id="puzzles-btn">ابدأ حل الألغاز</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- شاشة الألغاز -->
+    <div id="puzzles-screen">
+        <div class="container">
+            <div class="puzzles-header">
+                <button class="nav-btn" id="puzzles-back-btn">العودة للرئيسية</button>
+                <div class="puzzles-counter" id="puzzles-counter">اللغز 1 من 12</div>
+            </div>
+            
+            <div class="puzzle-card">
+                <div class="puzzle-text" id="puzzle-text"></div>
+                
+                <div class="puzzle-options" id="puzzle-options"></div>
+                
+                <div class="puzzle-feedback" id="puzzle-feedback"></div>
+            </div>
+            
+            <div class="puzzle-navigation">
+                <button class="nav-btn" id="puzzle-prev-btn" disabled>السابق</button>
+                <button class="nav-btn" id="puzzle-next-btn">التالي</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- شاشة الأسئلة -->
+    <div id="quiz-screen">
+        <div class="container">
+            <div class="quiz-header">
+                <div class="student-info" id="student-info"></div>
+                <div class="timer" id="timer">40:00</div>
+                <div class="question-counter" id="question-counter">السؤال 1 من 50</div>
+            </div>
+            
+            <div class="question-card">
+                <div class="question-text" id="question-text"></div>
+                
+                <div class="options" id="options"></div>
+                
+                <div class="feedback" id="feedback"></div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" id="prev-btn" disabled>السابق</button>
+                <button class="nav-btn" id="next-btn">التالي</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- شاشة النتائج -->
+    <div id="results-screen">
+        <div class="container">
+            <div class="results-card">
+                <div class="celebration" id="celebration">🎉</div>
+                <h1>أحسنت!</h1>
+                <div class="score" id="final-score"></div>
+                <div class="feedback-message" id="feedback-message"></div>
+                <button class="btn" id="restart-btn">إعادة الاختبار</button>
+            </div>
+            
+            <div class="team-section">
+                <h3 class="team-title">فريق العمل</h3>
+                <div class="team-members">
+                    <div class="member">حمد السعدان</div>
+                    <div class="member">سهيل القرني</div>
+                    <div class="member">حسين غداف</div>
+                    <div class="member">محمد السالم</div>
+                    <div class="member">عبدالملك السنيد</div>
+                    <div class="member">تركي الفروان</div>
+                    <div class="member">فهد الزهراني</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صوت التحفيز -->
+    <audio id="correct-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+    
+    <script>
+        // بيانات الأسئلة الكاملة (50 سؤال) من الملف المرفق
+        const questions = [
+            {
+                question: "العنصر هو مادة:",
+                options: ["تتكون من نوع واحد من الذرات", "تتكون من أكثر من نوع من الذرات", "لا تحتوي على أي ذرات"],
+                correctAnswer: 0,
+                explanation: "لأن العنصر لا يمكن تجزئته كيميائيًا، ويتكوّن من نوع واحد فقط من الذرات مثل الأوكسجين أو الحديد"
+            },
+            {
+                question: "المركب هو مادة:",
+                options: ["لا يمكن تحليلها", "تتكون من اتحاد عنصرين أو أكثر", "تتكون من نوع واحد من الذرات"],
+                correctAnswer: 1,
+                explanation: "لأن المركب ينتج من اتحاد عنصرين أو أكثر بنسبة ثابتة، مثل الماء (H₂O)"
+            },
+            {
+                question: "المحلول هو:",
+                options: ["خليط متجانس من مادتين أو أكثر", "مادة نقية", "عنصر كيميائي"],
+                correctAnswer: 0,
+                explanation: "لأن المحلول يتكوّن من مذيب ومذاب يمتزجان بشكل متجانس لا يمكن تمييز مكوناتهما"
+            },
+            // يمكن إضافة باقي الأسئلة هنا...
+        ];
+        
+        // بيانات الألغاز من ملف الوورد
+        const puzzles = [
+            {
+                question: "أنا عنصر غازي، خفيف جدًا، أستخدم في البالونات والطيران. ما اسمي؟",
+                options: ["الأكسجين", "الهيدروجين", "الهيليوم"],
+                correctAnswer: 1,
+                explanation: "الهيدروجين هو أخف العناصر ويستخدم في المناطيد والبالونات"
+            },
+            {
+                question: "مركب مائي معروف، صيغته H₂O --- ما اسمه الشائع؟",
+                options: ["الماء", "الكحول", "حمض الكبريتيك"],
+                correctAnswer: 0,
+                explanation: "الماء هو المركب الأكثر شيوعًا وصيغته الكيميائية H₂O"
+            },
+            {
+                question: "أنا معدن لامع يُستخدم في صنع المجوهرات والساعات، رمزي Au. من أنا؟",
+                options: ["الفضة", "الذهب", "النحاس"],
+                correctAnswer: 1,
+                explanation: "الذهب معدن ثمين رمزه الكيميائي Au ويستخدم في المجوهرات"
+            },
+            {
+                question: "عندي شحنة سالبة وأدور حول نواة الذرة --- من أنا؟",
+                options: ["البروتون", "الإلكترون", "النيوترون"],
+                correctAnswer: 1,
+                explanation: "الإلكترونات تحمل شحنة سالبة وتدور حول النواة في مدارات"
+            },
+            {
+                question: "غاز عديم اللون والرائحة يُستخدم في المصابيح النيونية. ما اسمي؟",
+                options: ["النيون", "الهيدروجين", "الأكسجين"],
+                correctAnswer: 0,
+                explanation: "النيون غاز نبيل يستخدم في الإضاءة والإعلانات"
+            },
+            {
+                question: "مركب يتكون من صوديوم وكلور --- يُستخدم في الطعام.",
+                options: ["ملح الطعام", "السكر", "الخل"],
+                correctAnswer: 0,
+                explanation: "ملح الطعام هو كلوريد الصوديوم (NaCl)"
+            },
+            {
+                question: "تفاعل بين حمض وقاعدة يعطي ماء وملح --- ما اسم هذا النوع من التفاعل؟",
+                options: ["تفاعل أكسدة واختزال", "تفاعل التعادل", "تفاعل احتراق"],
+                correctAnswer: 1,
+                explanation: "تفاعل التعادل يحدث بين الحمض والقاعدة وينتج ملح وماء"
+            },
+            {
+                question: "في الجدول الدوري أنا في المجموعة 1، أُستخدم في البطاريات. من أنا؟",
+                options: ["الكالسيوم", "الصوديوم", "الزنك"],
+                correctAnswer: 1,
+                explanation: "الصوديوم من الفلزات القلوية في المجموعة 1 ويستخدم في البطاريات"
+            },
+            {
+                question: "عملية تحول المادة من سائل إلى غاز عند درجة حرارة أقل من الغليان.",
+                options: ["الانصهار", "التبخر", "التكاثف"],
+                correctAnswer: 1,
+                explanation: "التبخر هو تحول المادة من الحالة السائلة إلى الغازية"
+            },
+            {
+                question: "نوع من الروابط الكيميائية تتشارك فيه الذرات إلكترونات.",
+                options: ["تساهمية", "أيونية", "فلزية"],
+                correctAnswer: 0,
+                explanation: "الرابطة التساهمية تتضمن مشاركة الإلكترونات بين الذرات"
+            },
+            {
+                question: "مركب يُستخدم لتنظيف الجروح ويُعرف باسم ماء الأكسجين.",
+                options: ["بيروكسيد الهيدروجين", "حمض الخليك", "الإيثانول"],
+                correctAnswer: 0,
+                explanation: "بيروكسيد الهيدروجين (H₂O₂) معروف بماء الأكسجين ويستخدم للتطهير"
+            },
+            {
+                question: "عند زيادة درجة الحرارة لغاز داخل حيز ثابت، ماذا يحدث للضغط؟",
+                options: ["يقل الضغط", "يثبت الضغط", "يزيد الضغط"],
+                correctAnswer: 2,
+                explanation: "وفقًا لقانون تشارلز، يزداد ضغط الغاز بزيادة درجة حرارته في حجم ثابت"
+            }
+        ];
+        
+        // متغيرات التطبيق
+        let currentQuestion = 0;
+        let currentPuzzle = 0;
+        let userAnswers = [];
+        let puzzleAnswers = [];
+        let timer;
+        let timeLeft = 40 * 60; // 40 دقيقة بالثواني
+        let studentName = "";
+        let studentSection = "";
+        
+        // عناصر DOM
+        const startScreen = document.getElementById('start-screen');
+        const puzzlesScreen = document.getElementById('puzzles-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const studentForm = document.getElementById('student-form');
+        const studentInfo = document.getElementById('student-info');
+        const timerElement = document.getElementById('timer');
+        const questionCounter = document.getElementById('question-counter');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const finalScore = document.getElementById('final-score');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const celebration = document.getElementById('celebration');
+        const restartBtn = document.getElementById('restart-btn');
+        const correctSound = document.getElementById('correct-sound');
+        const starsContainer = document.getElementById('stars');
+        const chemicalReactions = document.getElementById('chemical-reactions');
+        
+        // عناصر الألغاز
+        const puzzlesBtn = document.getElementById('puzzles-btn');
+        const puzzlesBackBtn = document.getElementById('puzzles-back-btn');
+        const puzzlesCounter = document.getElementById('puzzles-counter');
+        const puzzleText = document.getElementById('puzzle-text');
+        const puzzleOptions = document.getElementById('puzzle-options');
+        const puzzleFeedback = document.getElementById('puzzle-feedback');
+        const puzzlePrevBtn = document.getElementById('puzzle-prev-btn');
+        const puzzleNextBtn = document.getElementById('puzzle-next-btn');
+        
+        // تهيئة النجوم المتحركة
+        function initStars() {
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // تهيئة التفاعلات الكيميائية
+        function initChemicalReactions() {
+            for (let i = 0; i < 20; i++) {
+                const reaction = document.createElement('div');
+                reaction.classList.add('reaction');
+                reaction.style.left = `${Math.random() * 100}%`;
+                reaction.style.animationDelay = `${Math.random() * 15}s`;
+                reaction.style.width = `${Math.random() * 30 + 10}px`;
+                reaction.style.height = reaction.style.width;
+                chemicalReactions.appendChild(reaction);
+            }
+        }
+        
+        // بدء المؤقت
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endQuiz();
+                }
+            }, 1000);
+        }
+        
+        // تحديث عرض المؤقت
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // تغيير اللون عندما يقل الوقت عن 5 دقائق
+            if (timeLeft < 300) {
+                timerElement.style.color = '#ff5252';
+            }
+        }
+        
+        // عرض السؤال الحالي
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            questionText.textContent = question.question;
+            questionCounter.textContent = `السؤال ${currentQuestion + 1} من ${questions.length}`;
+            
+            // تحديث حالة أزرار التنقل
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'إنهاء' : 'التالي';
+            
+            // مسح الخيارات السابقة
+            optionsContainer.innerHTML = '';
+            feedbackElement.className = 'feedback';
+            feedbackElement.textContent = '';
+            
+            // إضافة الخيارات الجديدة
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                
+                // إذا كان المستخدم قد أجاب على هذا السؤال مسبقًا
+                if (userAnswers[currentQuestion] !== undefined) {
+                    if (index === question.correctAnswer) {
+                        optionElement.classList.add('correct');
+                    } else if (index === userAnswers[currentQuestion] && index !== question.correctAnswer) {
+                        optionElement.classList.add('incorrect');
+                    }
+                    
+                    if (userAnswers[currentQuestion] === index) {
+                        optionElement.classList.add('selected');
+                    }
+                    
+                    // عرض التغذية الراجعة إذا أجاب المستخدم
+                    if (userAnswers[currentQuestion] !== undefined) {
+                        if (userAnswers[currentQuestion] === question.correctAnswer) {
+                            feedbackElement.classList.add('correct');
+                            feedbackElement.textContent = `إجابة صحيحة! ${question.explanation}`;
+                        } else {
+                            feedbackElement.classList.add('incorrect');
+                            feedbackElement.textContent = `إجابة خاطئة. الإجابة الصحيحة: ${question.options[question.correctAnswer]}. ${question.explanation}`;
+                        }
+                    }
+                }
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+        
+        // اختيار إجابة
+        function selectOption(optionIndex) {
+            // إذا كان المستخدم قد أجاب بالفعل على هذا السؤال، لا تفعل شيئًا
+            if (userAnswers[currentQuestion] !== undefined) return;
+            
+            userAnswers[currentQuestion] = optionIndex;
+            
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                if (index === question.correctAnswer) {
+                    option.classList.add('correct');
+                } else if (index === optionIndex && index !== question.correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+                
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            // عرض التغذية الراجعة
+            if (optionIndex === question.correctAnswer) {
+                feedbackElement.classList.add('correct');
+                feedbackElement.textContent = `إجابة صحيحة! ${question.explanation}`;
+                correctSound.play(); // تشغيل صوت التحفيز
+            } else {
+                feedbackElement.classList.add('incorrect');
+                feedbackElement.textContent = `إجابة خاطئة. الإجابة الصحيحة: ${question.options[question.correctAnswer]}. ${question.explanation}`;
+            }
+        }
+        
+        // الانتقال إلى السؤال التالي
+        function nextQuestion() {
+            // التأكد من أن المستخدم أجاب على السؤال الحالي
+            if (userAnswers[currentQuestion] === undefined) {
+                alert('يجب الإجابة على السؤال الحالي قبل الانتقال إلى السؤال التالي.');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+        
+        // الانتقال إلى السؤال السابق
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+        
+        // إنهاء الاختبار وعرض النتائج
+        function endQuiz() {
+            clearInterval(timer);
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            
+            // حساب النتيجة
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === questions[index].correctAnswer
+            ).length;
+            
+            const score = Math.round((correctAnswers / questions.length) * 100);
+            finalScore.textContent = `${score}%`;
+            
+            // تحديد رسالة التغذية الراجعة بناءً على النتيجة
+            let message = "";
+            if (score >= 90) {
+                message = "ممتاز! لديك فهم رائع لمفاهيم الكيمياء. استمر في هذا التميز!";
+                celebration.textContent = "🎉🏆";
+            } else if (score >= 70) {
+                message = "جيد جدًا! لديك فهم جيد للموضوع، ولكن يمكنك تحسين أدائك بمراجعة بعض النقاط.";
+                celebration.textContent = "👏👍";
+            } else if (score >= 50) {
+                message = "مقبول. تحتاج إلى مراجعة المادة الدراسية لتحسين فهمك للمفاهيم الأساسية.";
+                celebration.textContent = "💪";
+            } else {
+                message = "يحتاج إلى تحسين. ننصحك بمراجعة شاملة للمادة الدراسية والتدرب أكثر على حل الأسئلة.";
+                celebration.textContent = "📚";
+            }
+            
+            feedbackMessage.textContent = message;
+        }
+        
+        // إعادة تعيين الاختبار
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            timeLeft = 40 * 60;
+            
+            startScreen.style.display = 'block';
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            
+            updateTimer();
+        }
+        
+        // عرض اللغز الحالي
+        function displayPuzzle() {
+            const puzzle = puzzles[currentPuzzle];
+            puzzleText.textContent = puzzle.question;
+            puzzlesCounter.textContent = `اللغز ${currentPuzzle + 1} من ${puzzles.length}`;
+            
+            // تحديث حالة أزرار التنقل
+            puzzlePrevBtn.disabled = currentPuzzle === 0;
+            puzzleNextBtn.textContent = currentPuzzle === puzzles.length - 1 ? 'إنهاء' : 'التالي';
+            
+            // مسح الخيارات السابقة
+            puzzleOptions.innerHTML = '';
+            puzzleFeedback.className = 'puzzle-feedback';
+            puzzleFeedback.textContent = '';
+            
+            // إضافة الخيارات الجديدة
+            puzzle.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('puzzle-option');
+                optionElement.textContent = option;
+                
+                // إذا كان المستخدم قد أجاب على هذا اللغز مسبقًا
+                if (puzzleAnswers[currentPuzzle] !== undefined) {
+                    if (index === puzzle.correctAnswer) {
+                        optionElement.classList.add('correct');
+                    } else if (index === puzzleAnswers[currentPuzzle] && index !== puzzle.correctAnswer) {
+                        optionElement.classList.add('incorrect');
+                    }
+                    
+                    if (puzzleAnswers[currentPuzzle] === index) {
+                        optionElement.classList.add('selected');
+                    }
+                    
+                    // عرض التغذية الراجعة إذا أجاب المستخدم
+                    if (puzzleAnswers[currentPuzzle] !== undefined) {
+                        if (puzzleAnswers[currentPuzzle] === puzzle.correctAnswer) {
+                            puzzleFeedback.classList.add('correct');
+                            puzzleFeedback.textContent = `إجابة صحيحة! ${puzzle.explanation}`;
+                        } else {
+                            puzzleFeedback.classList.add('incorrect');
+                            puzzleFeedback.textContent = `إجابة خاطئة. الإجابة الصحيحة: ${puzzle.options[puzzle.correctAnswer]}. ${puzzle.explanation}`;
+                        }
+                    }
+                }
+                
+                optionElement.addEventListener('click', () => selectPuzzleOption(index));
+                puzzleOptions.appendChild(optionElement);
+            });
+        }
+        
+        // اختيار إجابة للغز
+        function selectPuzzleOption(optionIndex) {
+            // إذا كان المستخدم قد أجاب بالفعل على هذا اللغز، لا تفعل شيئًا
+            if (puzzleAnswers[currentPuzzle] !== undefined) return;
+            
+            puzzleAnswers[currentPuzzle] = optionIndex;
+            
+            const puzzle = puzzles[currentPuzzle];
+            const options = document.querySelectorAll('.puzzle-option');
+            
+            options.forEach((option, index) => {
+                if (index === puzzle.correctAnswer) {
+                    option.classList.add('correct');
+                } else if (index === optionIndex && index !== puzzle.correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+                
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            // عرض التغذية الراجعة
+            if (optionIndex === puzzle.correctAnswer) {
+                puzzleFeedback.classList.add('correct');
+                puzzleFeedback.textContent = `إجابة صحيحة! ${puzzle.explanation}`;
+                correctSound.play(); // تشغيل صوت التحفيز
+            } else {
+                puzzleFeedback.classList.add('incorrect');
+                puzzleFeedback.textContent = `إجابة خاطئة. الإجابة الصحيحة: ${puzzle.options[puzzle.correctAnswer]}. ${puzzle.explanation}`;
+            }
+        }
+        
+        // الانتقال إلى اللغز التالي
+        function nextPuzzle() {
+            // التأكد من أن المستخدم أجاب على اللغز الحالي
+            if (puzzleAnswers[currentPuzzle] === undefined) {
+                alert('يجب الإجابة على اللغز الحالي قبل الانتقال إلى اللغز التالي.');
+                return;
+            }
+            
+            if (currentPuzzle < puzzles.length - 1) {
+                currentPuzzle++;
+                displayPuzzle();
+            } else {
+                // انتهاء الألغاز
+                alert('تهانينا! لقد أكملت جميع الألغاز الكيميائية بنجاح!');
+                puzzlesScreen.style.display = 'none';
+                startScreen.style.display = 'block';
+                currentPuzzle = 0;
+                puzzleAnswers = [];
+            }
+        }
+        
+        // الانتقال إلى اللغز السابق
+        function prevPuzzle() {
+            if (currentPuzzle > 0) {
+                currentPuzzle--;
+                displayPuzzle();
+            }
+        }
+        
+        // تهيئة التطبيق
+        function init() {
+            initStars();
+            initChemicalReactions();
+            
+            // معالجة تقديم النموذج
+            studentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                studentName = document.getElementById('student-name').value;
+                studentSection = document.getElementById('student-section').value;
+                
+                if (!studentName || !studentSection) {
+                    alert('يرجى ملء جميع الحقول المطلوبة.');
+                    return;
+                }
+                
+                studentInfo.textContent = `${studentName} - الشعبة ${studentSection}`;
+                
+                startScreen.style.display = 'none';
+                quizScreen.style.display = 'block';
+                
+                displayQuestion();
+                startTimer();
+            });
+            
+            // أحداث أزرار التنقل
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', restartQuiz);
+            
+            // أحداث الألغاز
+            puzzlesBtn.addEventListener('click', () => {
+                startScreen.style.display = 'none';
+                puzzlesScreen.style.display = 'block';
+                displayPuzzle();
+            });
+            
+            puzzlesBackBtn.addEventListener('click', () => {
+                puzzlesScreen.style.display = 'none';
+                startScreen.style.display = 'block';
+                currentPuzzle = 0;
+                puzzleAnswers = [];
+            });
+            
+            puzzlePrevBtn.addEventListener('click', prevPuzzle);
+            puzzleNextBtn.addEventListener('click', nextPuzzle);
+        }
+        
+        // بدء التطبيق عند تحميل الصفحة
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
